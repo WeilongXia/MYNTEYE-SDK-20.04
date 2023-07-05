@@ -71,7 +71,7 @@ catkin_package(
   CATKIN_DEPENDS cv_bridge geometry_msgs image_transport message_runtime nodelet roscpp sensor_msgs std_msgs tf
 )
 
-#get_filename_component(SDK_DIR "${PROJECT_SOURCE_DIR}/../../../.." ABSOLUTE)
+# get_filename_component(SDK_DIR "${PROJECT_SOURCE_DIR}/../../../.." ABSOLUTE)
 #LIST(APPEND CMAKE_PREFIX_PATH ${SDK_DIR}/_install/lib/cmake)
 
 LIST(APPEND CMAKE_MODULE_PATH cmake)
@@ -85,6 +85,8 @@ endif()
 
 find_package(OpenCV REQUIRED)
 
+find_package(Boost REQUIRED COMPONENTS filesystem)
+
 if(mynteye_WITH_GLOG)
   find_package(glog REQUIRED)
 endif()
@@ -96,13 +98,17 @@ add_compile_options(-std=c++11)
 include_directories(
   ${catkin_INCLUDE_DIRS}
   ${SDK_DIR}/src
+  ${Boost_INCLUDE_DIRS}
 )
 
 set(LINK_LIBS
   ${catkin_LIBRARIES}
   ${OpenCV_LIBS}
-  mynteye
+  /usr/local/lib/libmynteye.so.2
+  ${Boost_LIBRARIES}
 )
+
+# message("mynteye library: " ${mynteye})
 
 add_library(mynteye_wrapper src/wrapper_nodelet.cc)
 target_link_libraries(mynteye_wrapper ${LINK_LIBS})
