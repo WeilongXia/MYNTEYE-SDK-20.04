@@ -41,7 +41,7 @@
 
   <arg name="temperature_frame_id" default="$(arg mynteye)_temperature_frame" />
 
-  <arg name="gravity" default="9.8" />
+  <arg name="gravity" default="9.806" />
 
   <!-- Push down all topics/nodelets into "mynteye" namespace -->
   <group ns="$(arg mynteye)">
